@@ -18,7 +18,9 @@
       v-model="newTodo"
       @keyup.enter="addTodo">
   </header>
+  {% block content %}
   [[main_content]]
+  {% endblock %}
 </section>
 <footer class="info">
   <p>Double-click to edit a todo</p>
