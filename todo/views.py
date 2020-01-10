@@ -8,6 +8,14 @@ import json
 from django.views.decorators.http import require_POST
 
 
+def todo_fetch(request):
+    todos = Todo.objects.all()
+    todo_list = []
+    for index,todo in enumerate(todos, start=1):
+        todo_list.append({'id':index, 'title':todo.title, 'completed':todo.completed})
+
+    return JsonResponse(todo_list, safe=False)
+
 @csrf_exempt
 @require_POST
 def todo_save(request):
@@ -23,13 +31,6 @@ def todo_save(request):
                     form.save()
     return JsonResponse({})
 
-def todo_fetch(request):
-    todos = Todo.objects.all()
-    todo_list = []
-    for index,todo in enumerate(todos, start=1):
-        todo_list.append({'id':index, 'title':todo.title, 'completed':todo.completed})
-
-    return JsonResponse(todo_list, safe=False)
 
 def index(request):
     return render(request, 'todo/list.html')
