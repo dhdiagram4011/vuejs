@@ -10,22 +10,6 @@ from rest_framework import generics
 
 ## restapi serializer
 from .models import Todo
-from .serializers import TodoSerializer
-
-class TodoList(generics.ListCreateAPIView):
-    queryset = Todo.objects.all()
-    serializer_class = TodoSerializer
-
-    def get_queryset(self):
-        return
-
-
-class TodoDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Todo.objects.all()
-    serializer_class = TodoSerializer
-
-
-
 
 def todo_fetch(request):
     todos = Todo.objects.all()
