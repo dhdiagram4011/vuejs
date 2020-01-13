@@ -6,6 +6,25 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import TodoForm
 import json
 from django.views.decorators.http import require_POST
+from rest_framework import generics
+
+## restapi serializer
+from .models import Todo
+from .serializers import TodoSerializer
+
+class TodoList(generics.ListCreateAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
+    def get_queryset(self):
+        return
+
+
+class TodoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
+
 
 
 def todo_fetch(request):
@@ -17,7 +36,6 @@ def todo_fetch(request):
     return JsonResponse(todo_list, safe=False)
 
 @csrf_exempt
-@require_POST
 def todo_save(request):
     if request.body:
         data = json.loads(request.body)
